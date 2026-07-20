@@ -10,10 +10,18 @@
 
 ---
 
+### Maps
+
+| Name                                                                                 | Description           |
+| ------------------------------------------------------------------------------------ | --------------------- |
+| [Tokenizer](https://github.com/MythoFrame/SFD-Modding/blob/master/Maps/Tokenizer.md) | Lock and unlock maps. |
+
+---
+
 ### Cosmetics
 
-| Name                                                                                                     | Description                                |
-| -------------------------------------------------------------------------------------------------------- | ------------------------------------------ |
+| Name                                                                                    | Description                                |
+| --------------------------------------------------------------------------------------- | ------------------------------------------ |
 | [Overview](https://github.com/MythoFrame/SFD-Modding/blob/master/Cosmetics/Overview.md) | How cosmetics internally work in the game. |
 
 ---
