@@ -12,7 +12,7 @@ Reverse engineering and useful information for modding Superfighters Deluxe.
 
 | Name                                                                                                | Description                                |
 | --------------------------------------------------------------------------------------------------- | ------------------------------------------ |
-| [Special Chars](https://github.com/MythoFrame/SFD-Modding/blob/master/Misc/Cosmetics%20Overview.md) | How cosmetics internally work in the game. |
+| [Cosmetics Overview](https://github.com/MythoFrame/SFD-Modding/blob/master/Misc/Cosmetics%20Overview.md) | How cosmetics internally work in the game. |
 
 ## Misc
 
