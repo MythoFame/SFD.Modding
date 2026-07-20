@@ -14,7 +14,7 @@
 
 | Name                                                                                                     | Description                                |
 | -------------------------------------------------------------------------------------------------------- | ------------------------------------------ |
-| [Cosmetics Overview](https://github.com/MythoFrame/SFD-Modding/blob/master/Cosmetics/Overview.md) | How cosmetics internally work in the game. |
+| [Overview](https://github.com/MythoFrame/SFD-Modding/blob/master/Cosmetics/Overview.md) | How cosmetics internally work in the game. |
 
 ---
 
