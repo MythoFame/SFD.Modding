@@ -1,22 +1,20 @@
-# SFD Modding
-
 Reverse engineering and useful information for modding Superfighters Deluxe.
 
 ---
 
-## Textures
+### Textures
 
 ---
 
-## Sounds
+### Sounds
 
 ---
 
-## SFDX
+### SFDX
 
 ---
 
-## Cosmetics
+### Cosmetics
 
 | Name                                                                                                     | Description                                |
 | -------------------------------------------------------------------------------------------------------- | ------------------------------------------ |
@@ -24,7 +22,7 @@ Reverse engineering and useful information for modding Superfighters Deluxe.
 
 ---
 
-## Misc
+### Misc
 
 | Name                                                                                           | Description                                                              |
 | ---------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------ |
