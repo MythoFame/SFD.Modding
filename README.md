@@ -1,2 +1,2 @@
-# SFD-Modding
-Reverse engineering and useful information for modding Superfighters Dluexe
+# SFD Modding
+Reverse engineering and useful information for modding Superfighters Deluxe.
