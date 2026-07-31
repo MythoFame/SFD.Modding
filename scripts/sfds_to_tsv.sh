@@ -3,10 +3,10 @@
 # Converts sound definitions to TSV format.
 #
 # Usage:
-#   ./convert.sh <input.txt> > output.tsv
+#   ./sfds_to_tsv.sh <input.txt> > output.tsv
 #
 # Or:
-#   cat input.txt | ./convert.sh > output.tsv
+#   cat input.txt | ./sfds_to_tsv.sh > output.tsv
 #
 # Input format:
 #   <event> <volume> <sound1> <sound2> ...
