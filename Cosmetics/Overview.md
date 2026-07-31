@@ -6,7 +6,7 @@
 - `canEquip`: Can the item be changed in the CUSTOMIZE FIGHTER dialog. Example of an un-equippable item: Bear Skin.
 
 <div align='center'>
-    <img src='../Docs/CustomizeFighter.png' width=300 />
+    <img src='../assets/CustomizeFighter.png' width=300 />
 </div>
 
 - `canScript`: Can the item be changed using ScriptAPI. Example of an unscriptable item: Burnt Skin.
@@ -27,7 +27,7 @@
 
   | `false`                                         | `true`                                         |
   | ----------------------------------------------- | ---------------------------------------------- |
-  | <img src="../Docs/JacketUnderBelt_False.png" /> | <img src="../Docs/JacketUnderBelt_True.png" /> |
+  | <img src="../assets/JacketUnderBelt_False.png" /> | <img src="../assets/JacketUnderBelt_True.png" /> |
 
 - `colorPalette`: The name of the palette that holds a set of colors to customize your clothing. Open `Superfighters Deluxe\Content\Data\Colors\Palettes\ItemPalettes.sfdx` to see more detail. Currently there are 4 palettes in v1.3.7:
   - `Skin`
@@ -51,6 +51,8 @@
 
   The game need all 3 values above to compute the final z-index for each item in a body part before drawing on the screen.
 
+<!-- 
 ## TODO
 
 - Explain the role of some special colors (primary/secondary/tertiery)
+-->
