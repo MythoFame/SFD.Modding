@@ -11,18 +11,26 @@
 # Input format:
 #   <event> <volume> <sound1> <sound2> ...
 #
-# Output format:
-#   event<TAB>volume<TAB>sound
+# Output format (one row per event):
+#   event<TAB>volume<TAB>sounds
 #
-# Each sound is written as a separate row.
+# The multiple sound variants of an event are joined with ';' in a single
+# cell. Volumes use '.' as the decimal separator. Blank lines and '//'
+# comments are skipped.
 #
 
-echo -e "event\tvolume\tsound"
+echo -e "event\tvolume\tsounds"
 
 while read -r event volume sounds; do
-    [[ -z "$event" ]] && continue
+    event="${event//$'\r'/}"
+    volume="${volume//$'\r'/}"
+    sounds="${sounds//$'\r'/}"
 
-    for sound in $sounds; do
-        printf "%s\t%s\t%s\n" "$event" "$volume" "$sound"
-    done
-done < "${1:-/dev/stdin}"
+    [[ -z "$event" ]] && continue
+    [[ "$event" == //* ]] && continue
+
+    volume="${volume//,/.}"
+    sounds="${sounds// /;}"
+
+    printf "%s\t%s\t%s\n" "$event" "$volume" "$sounds"
+done < <(cat "${1:-/dev/stdin}"; echo)
