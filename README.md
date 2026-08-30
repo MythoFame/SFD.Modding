@@ -10,7 +10,7 @@
 
 | Name                 | Description               |
 | -------------------- | ------------------------- |
-| [SFDX](Misc/SFDX.md) | SFD File Format Ovewview. |
+| [SFDX](Misc/SFDX.md) | SFD File Format Overview. |
 
 ---
 
