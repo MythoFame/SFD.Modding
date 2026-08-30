@@ -27,13 +27,13 @@ If you can read one `tile(...)` block, one `fixture()` block, and one `Material(
 ### Index
 
 - [Base Syntax](SFDX.md#base-syntax)
-- [Tiles](SFD.md#tiles)
-- [Fixtures](SFD.md#fixtures)
-- [Animations](SFD.md#animations)
-- [Materials](SFD.md#materials)
-- [Collision Groups](SFD.md#collision-groups)
-- [Colors and Palettes](SFD.md#colors-and-palettes)
-- [Weapons](SFD.md#weapons)
+- [Tiles](SFDX.md#tiles)
+- [Fixtures](SFDX.md#fixtures)
+- [Animations](SFDX.md#animations)
+- [Materials](SFDX.md#materials)
+- [Collision Groups](SFDX.md#collision-groups)
+- [Colors and Palettes](SFDX.md#colors-and-palettes)
+- [Weapons](SFDX.md#weapons)
 
 ---
 
