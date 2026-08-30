@@ -32,7 +32,8 @@ If you can read one `tile(...)` block, one `fixture()` block, and one `Material(
 - [Animations](SFDX.md#animations)
 - [Materials](SFDX.md#materials)
 - [Collision Groups](SFDX.md#collision-groups)
-- [Colors and Palettes](SFDX.md#colors-and-palettes)
+- [Colors](SFDX.md#colors)
+- [Palettes](SFDX.md#palettes)
 - [Weapons](SFDX.md#weapons)
 
 ---
@@ -377,11 +378,11 @@ collisionGroup(static_ground) {
 - `dynamics_thrown`
 - `full`
 
-These are binary bitmask values, not normal integers.
+These are 16 bytes binary bitmask values, not normal integers.
 
 ---
 
-## Colors and Palettes
+## Colors
 
 ### Sample
 
@@ -389,30 +390,28 @@ These are binary bitmask values, not normal integers.
 color(White) {
     c = (255,255,255),(255,255,255),(255,255,255);
 }
+```
 
+### Fields
+
+- `c`
+
+## Palettes
+
+### Sample
+
+```sfdx
 colorPalette(Concrete) {
     colors1 = StoneGray,StoneYellow,StoneRed;
     colors2 = LightYellow,LightOrange,LightBlue,LightRed,LightGreen,White,Black,Transparent;
 }
 ```
 
-### Color Fields
-
-- `c`
-
-### Palette Fields
+### Fields
 
 - `colors1`
 - `colors2`
 - `colors3`
-
-### Tile Sample
-
-```sfdx
-tile(Concrete00A) {
-    colorPalette = Concrete;
-}
-```
 
 ---
 
@@ -459,17 +458,5 @@ tile(WpnPistol) {
 - `missileDamageMax`
 - `missileDamageFactor`
 - `missileDamageBase`
-
-### Fixture fields used
-
-- `collisionGroup`
-- `mass`
-- `collisionPoints`
-- `circle`
-- `blockFire`
-- `material`
-- `projectileHit`
-- `absorbProjectile`
-- `objectStrength`
 
 ---
