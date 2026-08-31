@@ -29,7 +29,6 @@ Reverse engineering and useful information for modding, map making and scripting
 
 | Name                                      | Description                                                                 |
 | ----------------------------------------- | --------------------------------------------------------------------------- |
-| [Tokenizer](Mapmaking/Tokenizer.md)       | Lock and unlock maps.                                                       |
 | [SFDM Format](Mapmaking/SFDM%20Format.md) | The .sfdm binary format: headers, campaigns, chapters and embedded scripts. |
 
 ---

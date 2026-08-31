@@ -53,8 +53,36 @@ reads it with `ReadChars(10)`. Since the characters often exceed U+007F, the byt
 length varies between 10 and 30.
 
 - Editable files store the plain ASCII text `SFDMAPEDIT` (10 bytes).
-- Officially locked files store the token computed from `Name + Author` — see
-  [Tokenizer](../Mapmaking/Tokenizer.md) for a ready-to-use implementation.
+- Officially locked files store the token computed from `Name + Author` — a
+  ready-to-use JavaScript implementation:
+
+```js
+function officialToken(author, name) {
+  const header = name + author;
+
+  let array = "0123456789".split('');
+  const length = array.length;
+
+  for (let i = 0; i < header.length; i++) {
+      let index = i % length;
+
+      let newCharCode = array[index].charCodeAt(0) + header.charCodeAt(index);
+      array[index] = String.fromCharCode(newCharCode);
+  }
+
+  array[0] = '1';
+
+  const bytes = new TextEncoder().encode(array.join(''));
+  const token = Array.from(bytes)
+      .map(b => b.toString(16).padStart(2, '0'))
+      .join('')
+      .toUpperCase();
+
+  return token;
+}
+
+console.log(officialToken("MythoFame", "Bogus"));
+```
 
 The token algorithm (mirrors the game's `MapInfo.CalcOfficialMap`):
 
