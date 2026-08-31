@@ -14,7 +14,6 @@ Reverse engineering and useful information for modding, map making and scripting
 
 ## Textures
 
----
 -->
  
 ## Sounds
@@ -23,15 +22,11 @@ Reverse engineering and useful information for modding, map making and scripting
 | --------------------------- | ------------------------------------------------------------------ |
 | [Sounds.tsv](Sounds/Sounds.tsv) | Game sound events mapped to sound files, with their default volume. |
 
----
-
 ## Mapmaking
 
 | Name                                      | Description                                                                 |
 | ----------------------------------------- | --------------------------------------------------------------------------- |
 | [SFDM Format](Mapmaking/SFDM%20Format.md) | The .sfdm binary format: headers, campaigns, chapters and embedded scripts. |
-
----
 
 ## Scripting
 
@@ -39,15 +34,11 @@ Reverse engineering and useful information for modding, map making and scripting
 | ----------------------------------------- | ------------------------------------------------------------------ |
 | [SFDE Format](Scripting/SFDE%20Format.md) | The .sfde binary format: h_ext, h_exscript and embedded C# source. |
 
----
-
 ## Cosmetics
 
 | Name                              | Description                                |
 | --------------------------------- | ------------------------------------------ |
 | [Cosmetics Internals](Cosmetics/Cosmetics%20Internals.md) | How cosmetics internally work in the game. |
-
----
 
 ## Misc
 
