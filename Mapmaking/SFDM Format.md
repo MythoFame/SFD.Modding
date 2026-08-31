@@ -1,7 +1,7 @@
 # SFDM Format (map files)
 
 `.sfdm` files are Superfighters Deluxe maps. They use the shared
-[File Format](../Misc/File%20Format.md) container; this page covers the parts
+[Binary World Format](../Misc/Binary%20%World%20Format.md) container; this page covers the parts
 specific to maps.
 
 ## Layout

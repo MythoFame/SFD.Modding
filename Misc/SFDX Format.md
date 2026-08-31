@@ -1,6 +1,6 @@
-# SFDX format guide
+# SFDX format (human readable)
 
-SFDX is a readable data format for game content. The core idea is simple:
+SFDX is a human readable data format for game content. The core idea is simple:
 
 - `tile` and `defaultTile` define world objects
 - `fixture` defines collision shapes
@@ -26,15 +26,15 @@ If you can read one `tile(...)` block, one `fixture()` block, and one `Material(
 
 ### Index
 
-- [Base Syntax](SFDX.md#base-syntax)
-- [Tiles](SFDX.md#tiles)
-- [Fixtures](SFDX.md#fixtures)
-- [Animations](SFDX.md#animations)
-- [Materials](SFDX.md#materials)
-- [Collision Groups](SFDX.md#collision-groups)
-- [Colors](SFDX.md#colors)
-- [Palettes](SFDX.md#palettes)
-- [Weapons](SFDX.md#weapons)
+- [Base Syntax](#base-syntax)
+- [Tiles](#tiles)
+- [Fixtures](#fixtures)
+- [Animations](#animations)
+- [Materials](#materials)
+- [Collision Groups](#collision-groups)
+- [Colors](#colors)
+- [Palettes](#palettes)
+- [Weapons](#weapons)
 
 ---
 

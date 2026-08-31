@@ -1,4 +1,4 @@
-# SFD Binary File Format
+# Binary World Format
 
 The `.sfdm` (map) and `.sfde` (extension script) files share one binary container: a
 sequential stream of length-prefixed section tokens. This page documents the parts

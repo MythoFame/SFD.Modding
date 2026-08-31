@@ -1,20 +1,31 @@
-### Textures
+<div align="center">
+
+[![Superfighters Deluxe Logo](https://raw.githubusercontent.com/MythoFame/.github/refs/heads/master/assets/SFD_titleLoop.gif)](https://store.steampowered.com/app/855860)
+
+# Superfighters Deluxe Modding
+
+Reverse engineering and useful information for modding, map making and scripting in Superfighters Deluxe
+
+[![GitHub License](https://img.shields.io/github/license/MythoFame/SFD.Modding)](LICENSE)
+
+</div>
+
+<!--
+
+## Textures
+
+---
+-->
+ 
+## Sounds
+
+| Name                        | Description                                                        |
+| --------------------------- | ------------------------------------------------------------------ |
+| [Sounds.tsv](Sounds/Sounds.tsv) | Game sound events mapped to sound files, with their default volume. |
 
 ---
 
-### Sounds
-
----
-
-### SFDX
-
-| Name                 | Description               |
-| -------------------- | ------------------------- |
-| [SFDX](Misc/SFDX.md) | SFD File Format Overview. |
-
----
-
-### Maps
+## Mapmaking
 
 | Name                                      | Description                                                                 |
 | ----------------------------------------- | --------------------------------------------------------------------------- |
@@ -23,7 +34,7 @@
 
 ---
 
-### Scripting
+## Scripting
 
 | Name                                      | Description                                                        |
 | ----------------------------------------- | ------------------------------------------------------------------ |
@@ -31,7 +42,7 @@
 
 ---
 
-### Cosmetics
+## Cosmetics
 
 | Name                              | Description                                |
 | --------------------------------- | ------------------------------------------ |
@@ -39,9 +50,10 @@
 
 ---
 
-### Misc
+## Misc
 
 | Name                                     | Description                                                                                 |
 | ---------------------------------------- | ------------------------------------------------------------------------------------------- |
-| [File Format](Misc/File%20Format.md)     | Binary container shared by .sfdm and .sfde: primitives, h\_\* headers and world properties. |
-| [Special Chars](Misc/Special%20Chars.md) | Broken and special characters that somehow work in Superfighters Deluxe.                    |
+| [Binary World Format](Misc/Binary%20World%20Format.md)     | Binary container shared by .sfdm and .sfde: primitives, h\_\* headers and world properties. |
+| [SFDX Format](Misc/SFDX%20Format.md) | Human-readable game content format: tiles, fixtures, animations, materials, collision groups, colors and weapons. |
+| [Special Characters](Misc/Special%20Characters.md) | Broken and special characters that somehow work in Superfighters Deluxe.                    |
