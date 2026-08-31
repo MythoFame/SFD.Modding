@@ -45,7 +45,7 @@ Reverse engineering and useful information for modding, map making and scripting
 
 | Name                              | Description                                |
 | --------------------------------- | ------------------------------------------ |
-| [Overview](Cosmetics/Overview.md) | How cosmetics internally work in the game. |
+| [Cosmetics Internals](Cosmetics/Cosmetics%20Internals.md) | How cosmetics internally work in the game. |
 
 ---
 

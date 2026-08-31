@@ -1,3 +1,5 @@
+# Cosmetics Internals
+
 ## Metadata
 
 - `id`: Has the same value as `fileName`. Female items are suffixed with `_fem`. Note that the game will crash if there are duplicated ids.
