@@ -5,7 +5,7 @@ SFDX is a human readable data format for game content. The core idea is simple:
 - `tile` and `defaultTile` define world objects
 - `fixture` defines collision shapes
 - `animation` defines visual timing
-- `Material` defines physical properties
+- `Material` defines physical Palettes
 - `collisionGroup` defines physics interaction masks
 - `color` and `colorPalette` define render variants
 - weapons are stored as tile-like entries with pickup physics
@@ -33,7 +33,7 @@ If you can read one `tile(...)` block, one `fixture()` block, and one `Material(
 - [Materials](#materials)
 - [Collision Groups](#collision-groups)
 - [Colors](#colors)
-- [Palettes](#palettes)
+- [](#palettes)
 - [Weapons](#weapons)
 
 ---
@@ -395,6 +395,8 @@ color(White) {
 ### Fields
 
 - `c`
+
+---
 
 ## Palettes
 
