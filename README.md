@@ -2,7 +2,7 @@
 
 [![Superfighters Deluxe Logo](https://raw.githubusercontent.com/MythoFame/.github/refs/heads/master/assets/SFD_titleLoop.gif)](https://store.steampowered.com/app/855860)
 
-# Superfighters Deluxe Modding
+# Modding
 
 Reverse engineering and useful information for modding, map making and scripting in Superfighters Deluxe
 
