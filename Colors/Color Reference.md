@@ -1,10 +1,11 @@
 # Color Reference
 
-Every color and palette shipped with Superfighters Deluxe, as of **v1.3.7**. The format
-and shading model are in [Colors](Colors.md), palette semantics in
-[Color Palettes](Palettes.md).
+SFD colors work using a list of colors combined with a palette system:
 
-Regenerate after a game update by re-reading:
+- [Colors](Colors.md): holds individual colors.
+- [Palettes](Palettes.md): groups of several colors.
+
+Colors are stored in:
 
 - `Content/Data/Colors/Colors/ItemColors.sfdx`
 - `Content/Data/Colors/Colors/TileColors.sfdx`
@@ -13,21 +14,14 @@ Regenerate after a game update by re-reading:
 
 ## Summary
 
-|          | Count                  |
+Below a list of all colors available in the game (since v1.3.7).
+
+| Type     | Count                  |
 | -------- | ---------------------- |
 | Colors   | 124 (87 tile, 37 item) |
 | Palettes | 19 (15 tile, 4 item)   |
 
-Ramp lengths across the 124 colors: 2 shades ×3, 3 shades ×58, 4 shades ×46, 5 shades ×17.
-The five maximum is a hard engine limit.
-
-**Adjusted** marks colors that `Textures.NormalizeAwayFromShadeColor` silently rewrites at
-load time because a shade collides with a marker value. The table shows the _written_
-values. For the loaded values see
-[Colors](Colors.md#a-color-that-looks-like-a-marker-gets-silently-edited). Seven colors
-are affected: `Wood1`, `ClothingDarkRed`, `Red`, `Green`, `Blue`, `NeonRed`, `NeonGreen`.
-
-**Used by** lists the palettes referencing the color, regardless of level.
+> **Adjusted** marks colors that `Textures.NormalizeAwayFromShadeColor` silently rewrites at load time because a shade collides with a marker value. The table shows the _written_ values.
 
 ## Colors
 
@@ -44,7 +38,7 @@ are affected: `Wood1`, `ClothingDarkRed`, `Red`, `Green`, `Blue`, `NeonRed`, `Ne
 | `StoneBlue`      | 3      | `(224,224,255)` `(160,160,255)` `(96,96,192)`                             |          | —                                                                                             |
 | `StoneCyan`      | 3      | `(40,128,128)` `(24,64,96)` `(24,64,64)`                                  |          | —                                                                                             |
 | `Wood0`          | 3      | `(224,211,181)` `(224,172,116)` `(96,64,56)`                              |          | `Wood`                                                                                        |
-| `Wood1`          | 3      | `(255,211,181)` `(255,172,116)` `(128,0,0)`                               | yes      | `Wood`                                                                                        |
+| `Wood1`          | 3      | `(255,211,181)` `(255,172,116)` `(128,0,0)`                               | 🟢       | `Wood`                                                                                        |
 | `MetalGray`      | 5      | `(255,255,255)` `(192,192,192)` `(128,128,128)` `(64,64,64)` `(32,32,32)` |          | `Metal`                                                                                       |
 | `MetalRed`       | 3      | `(255,160,160)` `(255,64,64)` `(192,24,24)`                               |          | `Metal`                                                                                       |
 | `MetalPink`      | 3      | `(255,224,192)` `(255,128,104)` `(192,64,48)`                             |          | `Metal`                                                                                       |
@@ -53,9 +47,9 @@ are affected: `Wood1`, `ClothingDarkRed`, `Red`, `Green`, `Blue`, `NeonRed`, `Ne
 | `MetalYellow`    | 3      | `(255,255,192)` `(255,192,0)` `(240,160,0)`                               |          | `Metal`                                                                                       |
 | `NeonBlue`       | 5      | `(192,224,255)` `(96,128,255)` `(0,64,192)` `(0,32,128)` `(0,16,64)`      |          | `Neon`                                                                                        |
 | `NeonCyan`       | 5      | `(192,255,255)` `(0,208,208)` `(0,192,192)` `(0,128,128)` `(0,64,64)`     |          | `Neon`                                                                                        |
-| `NeonGreen`      | 5      | `(224,255,224)` `(64,255,0)` `(32,192,0)` `(0,128,0)` `(0,64,0)`          | yes      | `Neon`                                                                                        |
+| `NeonGreen`      | 5      | `(224,255,224)` `(64,255,0)` `(32,192,0)` `(0,128,0)` `(0,64,0)`          | 🟢       | `Neon`                                                                                        |
 | `NeonPink`       | 5      | `(255,224,255)` `(255,0,224)` `(192,0,160)` `(128,0,96)` `(64,0,48)`      |          | `Neon`                                                                                        |
-| `NeonRed`        | 5      | `(255,224,224)` `(255,64,0)` `(192,32,0)` `(128,0,0)` `(64,0,0)`          | yes      | `Neon`                                                                                        |
+| `NeonRed`        | 5      | `(255,224,224)` `(255,64,0)` `(192,32,0)` `(128,0,0)` `(64,0,0)`          | 🟢       | `Neon`                                                                                        |
 | `NeonYellow`     | 5      | `(255,255,224)` `(255,224,0)` `(192,160,0)` `(128,96,0)` `(64,48,0)`      |          | `Neon`                                                                                        |
 | `DirtYellow`     | 3      | `(255,224,128)` `(192,192,0)` `(128,96,0)`                                |          | `Dirt`                                                                                        |
 | `DirtBrown`      | 3      | `(255,192,0)` `(192,128,0)` `(96,48,0)`                                   |          | `Dirt`                                                                                        |
@@ -64,9 +58,9 @@ are affected: `Wood1`, `ClothingDarkRed`, `Red`, `Green`, `Blue`, `NeonRed`, `Ne
 | `TileOrange`     | 5      | `(255,198,136)` `(255,128,0)` `(128,64,0)` `(64,32,0)` `(32,16,0)`        |          | `Tile`                                                                                        |
 | `TileCyan`       | 5      | `(128,255,255)` `(0,192,192)` `(0,128,128)` `(0,64,64)` `(0,32,32)`       |          | `Tile`                                                                                        |
 | `Gray`           | 5      | `(192,192,192)` `(128,128,128)` `(64,64,64)` `(32,32,32)` `(16,16,16)`    |          | `Cloth`, `Solid`                                                                              |
-| `Red`            | 5      | `(255,0,0)` `(192,0,0)` `(128,0,0)` `(64,0,0)` `(32,0,0)`                 | yes      | `Cloth`, `Solid`                                                                              |
-| `Green`          | 5      | `(0,255,0)` `(0,192,0)` `(0,128,0)` `(0,64,0)` `(0,32,0)`                 | yes      | `Solid`                                                                                       |
-| `Blue`           | 5      | `(0,0,255)` `(0,0,192)` `(0,0,128)` `(0,0,64)` `(0,0,32)`                 | yes      | `Cloth`, `Solid`                                                                              |
+| `Red`            | 5      | `(255,0,0)` `(192,0,0)` `(128,0,0)` `(64,0,0)` `(32,0,0)`                 | 🟢       | `Cloth`, `Solid`                                                                              |
+| `Green`          | 5      | `(0,255,0)` `(0,192,0)` `(0,128,0)` `(0,64,0)` `(0,32,0)`                 | 🟢       | `Solid`                                                                                       |
+| `Blue`           | 5      | `(0,0,255)` `(0,0,192)` `(0,0,128)` `(0,0,64)` `(0,0,32)`                 | 🟢       | `Cloth`, `Solid`                                                                              |
 | `Yellow`         | 5      | `(255,255,0)` `(192,192,0)` `(128,128,0)` `(64,64,0)` `(32,32,0)`         |          | `Cloth`, `Solid`                                                                              |
 | `Cyan`           | 5      | `(0,255,255)` `(0,128,128)` `(32,96,96)` `(0,64,64)` `(0,32,32)`          |          | `Cloth`, `Solid`                                                                              |
 | `Magenta`        | 5      | `(255,0,255)` `(192,0,192)` `(128,0,128)` `(64,0,64)` `(32,0,32)`         |          | `Cloth`, `Solid`                                                                              |
@@ -154,7 +148,7 @@ are affected: `Wood1`, `ClothingDarkRed`, `Red`, `Green`, `Blue`, `NeonRed`, `Ne
 | `ClothingBrown`       | 3      | `(128,64,48)` `(96,48,32)` `(64,32,16)`         |          | `Clothing1`, `ClothingDark1`, `ClothingGoggles1`, `Skin` |
 | `ClothingDarkGray`    | 3      | `(48,48,48)` `(24,24,24)` `(12,12,12)`          |          | `Clothing1`, `ClothingDark1`, `ClothingGoggles1`, `Skin` |
 | `ClothingDarkPink`    | 3      | `(160,64,64)` `(128,48,48)` `(96,32,32)`        |          | `Clothing1`, `ClothingDark1`, `ClothingGoggles1`, `Skin` |
-| `ClothingDarkRed`     | 3      | `(128,16,0)` `(96,8,0)` `(64,0,0)`              | yes      | `Clothing1`, `ClothingDark1`, `ClothingGoggles1`, `Skin` |
+| `ClothingDarkRed`     | 3      | `(128,16,0)` `(96,8,0)` `(64,0,0)`              | 🟢       | `Clothing1`, `ClothingDark1`, `ClothingGoggles1`, `Skin` |
 | `ClothingDarkOrange`  | 3      | `(128,64,0)` `(96,32,0)` `(64,32,0)`            |          | `Clothing1`, `ClothingDark1`, `ClothingGoggles1`, `Skin` |
 | `ClothingDarkYellow`  | 3      | `(128,128,0)` `(96,96,0)` `(64,64,0)`           |          | `Clothing1`, `ClothingDark1`, `ClothingGoggles1`, `Skin` |
 | `ClothingDarkGreen`   | 3      | `(16,128,0)` `(12,96,0)` `(8,48,0)`             |          | `Clothing1`, `ClothingDark1`, `ClothingGoggles1`, `Skin` |
@@ -187,17 +181,11 @@ are affected: `Wood1`, `ClothingDarkRed`, `Red`, `Green`, `Blue`, `NeonRed`, `Ne
 | `FarBG`    | 21: the ten `Bg*`, ten `BgDark*`, then `Black`                                           | same as `BG.colors2`                                                                          | —                 |
 | `Sky`      | 24: the ten `Bg*`, ten `BgDark*`, then `Black`, `SkyDarkRed` `SkyDarkBlue` `SkyDarkGray` | same as `BG.colors2`                                                                          | —                 |
 
-`Concrete` and `Stone` are identical as shipped. `colors1` in both is `StoneGray`,
-`StoneYellow`, `StoneRed`, with `StoneBlue` and `StoneCyan` commented out. Those two are
-the only tile colors no palette can reach. The shared eight-color `colors2` block is
-repeated verbatim in `Concrete`, `Stone`, `Metal`, `Tile`, `Wood` and `Dirt`, and again
-without `Transparent` in `BG`, `FarBG` and `Sky`.
+`Concrete` and `Stone` are identical as shipped. `colors1` in both is `StoneGray`, `StoneYellow`, `StoneRed`, with `StoneBlue` and `StoneCyan` commented out. Those two are the only tile colors no palette can reach. The shared eight-color `colors2` block is repeated verbatim in `Concrete`, `Stone`, `Metal`, `Tile`, `Wood` and `Dirt`, and again without `Transparent` in `BG`, `FarBG` and `Sky`.
 
 ### Item palettes (`ItemPalettes.sfdx`)
 
-Apart from the five `Skin*` tones, `ClothingWhite` and `ClothingBlack`, the item palettes
-all draw on the same 30 colors: ten `ClothingLight*`, ten mid-tone `Clothing*` and ten
-`ClothingDark*`. They are abbreviated below as:
+Apart from the five `Skin*` tones, `ClothingWhite` and `ClothingBlack`, the item palettes all draw on the same 30 colors: ten `ClothingLight*`, ten mid-tone `Clothing*` and ten `ClothingDark*`. They are abbreviated below as:
 
 - **Light**: the ten `ClothingLight*` colors
 - **Mid**: the ten plain `Clothing*` colors
@@ -210,25 +198,17 @@ all draw on the same 30 colors: ten `ClothingLight*`, ten mid-tone `Clothing*` a
 | `ClothingGoggles1` | Dark + Mid                              | Light              | —         | 15 items    |
 | `ClothingDark1`    | Dark + Mid                              | Light + Mid + Dark | —         | 40 items    |
 
-`Skin` is the odd one out: `colors1` is skin tone and `colors2` is clothing colour, so skin
-and face-paint textures paint red markers for the body and green markers for the warpaint.
-`Clothing1` and `ClothingDark1` differ only in `colors1`. Dark leads with the muted half of
-the range, which is what makes an uncoloured item default to a darker garment.
+`Skin` is the odd one out: `colors1` is skin tone and `colors2` is clothing colour, so skin and face-paint textures paint red markers for the body and green markers for the warpaint. `Clothing1` and `ClothingDark1` differ only in `colors1`. Dark leads with the muted half of the range, which is what makes an uncoloured item default to a darker garment.
 
 No item palette defines `colors3`, and no shipped clothing item paints a blue marker.
 
 ## Notes on the shipped data
 
-**Unreferenced colors.** These are defined but not in any palette, so nothing can select
-them: `StoneBlue`, `StoneCyan` (commented out of `Concrete` and `Stone`), `ClothingWhite`
-and `ClothingBlack`.
+**Unreferenced colors.** These are defined but not in any palette, so nothing can select them: `StoneBlue`, `StoneCyan` (commented out of `Concrete` and `Stone`), `ClothingWhite` and `ClothingBlack`.
 
-**Two-shade colors.** Only the `bgTest1`, `bgTest2` and `bgTest3` debug colors have fewer
-than three shades. A texture painting a third marker with them would leave that marker
-uncolored.
+**Two-shade colors.** Only the `bgTest1`, `bgTest2` and `bgTest3` debug colors have fewer than three shades. A texture painting a third marker with them would leave that marker uncolored.
 
-**Item palette assignment.** Counting the `colorPalette` string across all 213 `.item`
-files under `Content/Data/Items/`:
+**Item palette assignment.** Counting the `colorPalette` string across all 213 `.item` files under `Content/Data/Items/`:
 
 | Palette            | Items | Equipment layers          |
 | ------------------ | ----- | ------------------------- |
@@ -237,15 +217,8 @@ files under `Content/Data/Items/`:
 | `ClothingGoggles1` | 15    | 0, 5, 6, 8                |
 | `Skin`             | 13    | 0, 9                      |
 
-**Uncolorable items.** 14 items contain no marker pixels, so no palette can change how they
-look: `BearSkin`, `Burnt`, `Burnt_fem`, `Zombie`, `Zombie_fem`, `DogTag`, `Earpiece`,
-`GoalieMask`, `SantaMask`, `RiceHat`, `GrenadeBelt`, `GrenadeBelt_fem`, `HurtLevel1`,
-`HurtLevel2`.
+**Uncolorable items.** 14 items contain no marker pixels, so no palette can change how they look: `BearSkin`, `Burnt`, `Burnt_fem`, `Zombie`, `Zombie_fem`, `DogTag`, `Earpiece`, `GoalieMask`, `SantaMask`, `RiceHat`, `GrenadeBelt`, `GrenadeBelt_fem`, `HurtLevel1`, `HurtLevel2`.
 
-Of the 199 colorable items, 195 paint red markers and 91 paint green markers. None paint a
-blue marker, which is why `colors3` is unused on the item side.
+Of the 199 colorable items, 195 paint red markers and 91 paint green markers. None paint a blue marker, which is why `colors3` is unused on the item side.
 
-**`Transparent` is opaque black.** As explained in [Colors](Colors.md), the shipped
-`(0,0,0,0)` tuples parse into four opaque black shades. Six palettes reference it
-(`Concrete`, `Stone`, `Metal`, `Tile`, `Wood` and `Dirt`), always as the last entry of
-`colors2`, so in practice it acts as an "erase to black" option on level 1.
+**`Transparent` is opaque black.** As explained in [Colors](Colors.md), the shipped `(0,0,0,0)` tuples parse into four opaque black shades. Six palettes reference it (`Concrete`, `Stone`, `Metal`, `Tile`, `Wood` and `Dirt`), always as the last entry of `colors2`, so in practice it acts as an "erase to black" option on level 1.
