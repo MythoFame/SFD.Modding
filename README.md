@@ -30,6 +30,12 @@ Reverse engineering and useful information for modding, map making and scripting
 | ------------------------------- | ------------------------------------------------------------------- |
 | [Sounds.tsv](Sounds/Sounds.tsv) | Game sound events mapped to sound files, with their default volume. |
 
+## Collisions
+
+| Name                                                 | Description                                                  |
+| ---------------------------------------------------- | ------------------------------------------------------------ |
+| [Collisions Bytes](Collisions/Collisions%20Bytes.md) | How game handle collisions with maskbytes and categorybytes. |
+
 ## Mapmaking
 
 | Name                                      | Description                                                                 |
