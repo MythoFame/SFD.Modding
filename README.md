@@ -16,6 +16,14 @@ Reverse engineering and useful information for modding, map making and scripting
 
 -->
 
+## Colors
+
+| Name                                           | Description                                                                            |
+| ---------------------------------------------- | -------------------------------------------------------------------------------------- |
+| [Colors](Colors/Colors.md)                     | How recoloring works: marker pixels, the five shade slots, the `color()` format.       |
+| [Color Palettes](Colors/Palettes.md)           | The `colorPalette()` format, the three color levels, and how objects pick colors.      |
+| [Color Reference](Colors/Color%20Reference.md) | All 124 shipped colors and 19 palettes, with the colors and items each one is used by. |
+
 ## Sounds
 
 | Name                            | Description                                                         |
@@ -42,8 +50,8 @@ Reverse engineering and useful information for modding, map making and scripting
 
 ## Misc
 
-| Name                                                   | Description                                                                                                       |
-| ------------------------------------------------------ | ----------------------------------------------------------------------------------------------------------------- |
-| [Binary World Format](Misc/Binary%20World%20Format.md) | Binary container shared by .sfdm and .sfde: primitives, h\_\* headers and world properties.                       |
-| [SFDX Format](Misc/SFDX%20Format.md)                   | Human-readable game content format: tiles, fixtures, animations, materials, collision groups, colors and weapons. |
-| [Special Characters](Misc/Special%20Characters.md)     | Broken and special characters that somehow work in Superfighters Deluxe.                                          |
+| Name                                                   | Description                                                                                               |
+| ------------------------------------------------------ | --------------------------------------------------------------------------------------------------------- |
+| [Binary World Format](Misc/Binary%20World%20Format.md) | Binary container shared by .sfdm and .sfde: primitives, h\_\* headers and world properties.               |
+| [SFDX Format](Misc/SFDX%20Format.md)                   | Human-readable game content format: tiles, fixtures, animations, materials, collision groups and weapons. |
+| [Special Characters](Misc/Special%20Characters.md)     | Broken and special characters that somehow work in Superfighters Deluxe.                                  |

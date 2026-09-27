@@ -1,6 +1,6 @@
 # SFDE Format (extension scripts)
 
-`.sfde` files are Superfighters Deluxe **extension scripts**. They use the shared [File Format](../Misc/File%20Format.md)
+`.sfde` files are Superfighters Deluxe **extension scripts**. They use the shared [Binary World Format](../Misc/Binary%20World%20Format.md)
 container and are nearly identical to `.sfdm` maps; this page covers the
 differences.
 
@@ -18,7 +18,7 @@ Two additions over a map header, and one body section removed:
 - `h_exscript\n` is added.
 - `c_scrpt` is **never present** — the source lives in the header instead.
 
-Annotated excerpt from a real extension script (*Spawn Variety*):
+Annotated excerpt from a real extension script (_Spawn Variety_):
 
 ```
 0x0138  [5]"h_pei" | 0a "3468475555"           publish ID
@@ -42,7 +42,7 @@ values: `Versus`, `Custom`, `Campaign`, `Survival`.
 Two quirks make this section easy to corrupt:
 
 1. **The token itself ends with a newline.** The length prefix is `0x0B` and the
-   token bytes are `68 5F 65 78 73 63 72 69 70 74 0A` — `"h_exscript\n"` — *not*
+   token bytes are `68 5F 65 78 73 63 72 69 70 74 0A` — `"h_exscript\n"` — _not_
    the 10-character `"h_exscript"`. Parsers looking for `[10]"h_exscript"` will
    miss it; parsers writing `[10]"h_exscript"` leave a stray `0A` that desyncs
    the stream.
