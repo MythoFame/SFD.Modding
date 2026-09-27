@@ -1,35 +1,34 @@
 # Collisions Filter
 
-In SFD you can alter collisions between different layers by using mask filters, via scripts or with the `AlterCollision` trigger.  
+In SFD you can alter collisions between different layers by using mask and category bytes, via scripts or with the `AlterCollisionTile`.  
 The collisions values can be found at: `Content/Data/Tiles/collisionGroups/collisionGroups.sfdx`.
 
-**Note**: collisions masks are actually a feature of the Box2D library, which is in SFD for physics.
+**Note**: collisions bytes are actually a feature of the Box2D library, which is used by SFD for physics.
 
-## Hexadeciaml system
+## Hexadeciaml System
 
-To make it simple, hexadecimal is a number format ranging from 0 to F.
-Decimal format is a base 10 numerical system, hexadecimal is a base 16 instead.
+To make it simple, hexadecimal is a number format ranging from `0` to `F`, while binary is composed only by two digits, `0` and `1`.
 
 Here's their digits and their translation:
 
-| Hex  | Binary | Decimal |
-| ---- | ------ | ------- |
-| `0`  | `0000` | `0`     |
-| `1`  | `0001` | `1`     |
-| `2`  | `0010` | `2`     |
-| `3`  | `0011` | `3`     |
-| `4`  | `0100` | `4`     |
-| `5`  | `0101` | `5`     |
-| `6`  | `0110` | `6`     |
-| `7`  | `0111` | `7`     |
-| `8`  | `1000` | `8`     |
-| `9`  | `1001` | `9`     |
-| `10` | `1010` | `A`     |
-| `11` | `1011` | `B`     |
-| `12` | `1100` | `C`     |
-| `13` | `1101` | `D`     |
-| `14` | `1110` | `E`     |
-| `15` | `1111` | `F`     |
+| Hex | Binary | Decimal |
+| --- | ------ | ------- |
+| `0` | `0000` | `0`     |
+| `1` | `0001` | `1`     |
+| `2` | `0010` | `2`     |
+| `3` | `0011` | `3`     |
+| `4` | `0100` | `4`     |
+| `5` | `0101` | `5`     |
+| `6` | `0110` | `6`     |
+| `7` | `0111` | `7`     |
+| `8` | `1000` | `8`     |
+| `9` | `1001` | `9`     |
+| `A` | `1010` | `10`    |
+| `B` | `1011` | `11`    |
+| `C` | `1100` | `12`    |
+| `D` | `1101` | `13`    |
+| `E` | `1110` | `14`    |
+| `F` | `1111` | `15`    |
 
 ## Pratical Example
 
