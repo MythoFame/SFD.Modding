@@ -7,7 +7,7 @@ SFDX is a human readable data format for game content. The core idea is simple:
 - `animation` defines visual timing
 - `Material` defines physical Palettes
 - `collisionGroup` defines physics interaction masks
-- `color` and `colorPalette` define render variants
+- `color` and `colorPalette` define render variants, see [Colors](../Colors/Colors.md)
 - weapons are stored as tile-like entries with pickup physics
 
 If you can read one `tile(...)` block, one `fixture()` block, and one `Material(...)` block, you can understand most of the format.
@@ -33,7 +33,7 @@ If you can read one `tile(...)` block, one `fixture()` block, and one `Material(
 - [Materials](#materials)
 - [Collision Groups](#collision-groups)
 - [Colors](#colors)
-- [](#palettes)
+- [Palettes](#palettes)
 - [Weapons](#weapons)
 
 ---
@@ -142,7 +142,6 @@ Visual:
 - `listTexture`
 - `tileTextureOffset`
 - `colorPalette`
-- `startColor`
 - `drawCategory`
 - `mainLayer`
 - `weatherGround`
@@ -395,6 +394,11 @@ color(White) {
 ### Fields
 
 - `c`
+- `key`
+
+Each `(r,g,b)` triple is one shade of a five-slot ramp; the i-th triple replaces the i-th
+marker value painted into the texture. Alpha is not part of the format and any fourth
+component silently shifts the ramp. See [Colors](../Colors/Colors.md).
 
 ---
 
@@ -414,6 +418,9 @@ colorPalette(Concrete) {
 - `colors1`
 - `colors2`
 - `colors3`
+
+Each level is a comma separated list of color names and drives one primary channel of the
+recolor. See [Color Palettes](../Colors/Palettes.md).
 
 ---
 
