@@ -1,15 +1,15 @@
-# Collisions Filter
+# Collision Filter
 
 In SFD you can alter collisions between different layers by using mask and category bytes, via scripts or with the `AlterCollisionTile`.  
-The collisions values can be found at: `Content/Data/Tiles/collisionGroups/collisionGroups.sfdx`.
+The collision values can be found at: `Content/Data/Tiles/collisionGroups/collisionGroups.sfdx`.
 
-**Note**: collisions bytes are actually a feature of the Box2D library, which is used by SFD for physics.
+**Note**: collision bytes are actually a feature of the Box2D library, which is used by SFD for physics.
 
-## Hexadeciaml System
+## Hexadecimal System
 
-To make it simple, hexadecimal is a number format ranging from `0` to `F`, while binary is composed only by two digits, `0` and `1`.
+To make it simple, hexadecimal is a number format ranging from `0` to `F`, while binary is composed of only two digits, `0` and `1`.
 
-Here's their digits and their translation:
+Here are the digits and their translations:
 
 | Hex | Binary | Decimal |
 | --- | ------ | ------- |
@@ -30,57 +30,57 @@ Here's their digits and their translation:
 | `E` | `1110` | `14`    |
 | `F` | `1111` | `15`    |
 
-## Pratical Example
+## Practical Example
 
-Let's say we want to disable the collisions between players and a crate.
+Let's say we want to disable collisions between players and a crate.
 
-Open `collisionGroups.sfdx` and you will notice that there are the binary values for the maskbytes, categorybytes and abovebytes of different items.
-Take note of the maskbytes and categorybytes of the player and of the crates
+Open `collisionGroups.sfdx` and you will notice the binary values for the `maskbytes`, `categorybytes` and `abovebytes` of different items.
+Take note of the `maskbytes` and `categorybytes` of the player and of the crates.
 
-### Why they collide?
+### Why do they collide?
 
-They collide when one byte in the categorybyte of the first object is to `1` while the same byte of the maskbytes of the second object is the same value.
-Note that it apply reversally, with categorybytes from the second object and maskbytes from the first object.
+They collide when one byte in the `categorybytes` of the first object is set to `1` while the same byte of the `maskbytes` of the second object is also `1`.
+Note that it applies in reverse, with `categorybytes` from the second object and `maskbytes` from the first object.
 
 So, what do we do?
 
-First, check the categorybytes of the crate(dynamic_g1), which is `0000 0000 0000 1000`.
-as you can see, the fourth byte (starting from right) is `1`; meaning that if the player's fourth maskbyte is `1` too, then there will be a collision.
+First, check the `categorybytes` of the crate (`dynamic_g1`), which are `0000 0000 0000 1000`.
+As you can see, the fourth byte (starting from the right) is `1`, meaning that if the player's fourth `maskbyte` is `1` too, there will be a collision.
 
-The player's maskbytes are `0000 0000 0000 1011`
-you see that the player's fourth maskbyte is `1` as well, that mean that players will collide with crates.
+The player's `maskbytes` are `0000 0000 0000 1011`.
+You can see that the player's fourth `maskbyte` is `1` as well, which means players will collide with crates.
 
-As you may have noticed, altercollisiontiles disable category and mask bytes, so, if we want to make so that the crate can't hit players, we will have to either:
+As you may have noticed, `AlterCollisionTile`s disable category and mask bytes, so if we want to make it so that the crate can't hit players, we will have to either:
 
-- disable players fourth maskbyte
-- disable crate's fourth categorybyte
+- disable the player's fourth `maskbyte`
+- disable the crate's fourth `categorybyte`
 
-it's easier to handle the crate, then we will go for the second solution.
+It's easier to handle the crate, so we will go for the second solution.
 
 ### Disabling the collision
 
-Link your `AtlerCollisionTile` to the crate and disable the bytes you want to disable.
+Link your `AlterCollisionTile` to the crate and disable the bytes you want to disable.
 
-For instance, you want to disable the fourth byte of the crate's categorybytes, that translate to `0000 0000 0000 1000` in binary
+For instance, you want to disable the fourth byte of the crate's `categorybytes`, that translates to `0000 0000 0000 1000` in binary.
 
-But, since altercollisiontiles use hexadecimal rather than binary, you have to translate the binary number into a hexadecimal one:
+But since `AlterCollisionTile`s use hexadecimal rather than binary, you have to translate the binary number into a hexadecimal one:
 
 | Binary                | Hex    |
 | --------------------- | ------ |
 | `0000 0000 0000 1000` | `0008` |
 
-Write `0008` into the 'disable categorybytes' section of the altercollision tile.
+Write `0008` into the `disable categorybytes` section of the `AlterCollisionTile`.
 
-Now we want to apply the same logic but to crate's maskbytes (`1111 1111 1110 1111`) and player's categorybytes (`0000 0000 0000 0100`) this time
-thus, we want to set to `0` the third (and only the third) byte on the crate's maskbytes, so they won't collide:
+Now we want to apply the same logic but to the crate's `maskbytes` (`1111 1111 1110 1111`) and the player's `categorybytes` (`0000 0000 0000 0100`) this time.
+Thus, we want to set the third (and only the third) byte of the crate's `maskbytes` to `0`, so they won't collide:
 
-The value `0000 0000 0000 0100` translates to `0006` in hex. Put it in the disable maskbytes section, et voilà! You cannot collide with the crate anymore.
+The value `0000 0000 0000 0100` translates to `0004` in hex. Put it in the `disable maskbytes` section, et voilà! You cannot collide with the crate anymore.
 
 ## Summary
 
 You will have to do these few steps to disable the collision between two objects:
 
-1. Check and take note of the categorybytes and maskbytes of both object.
-2. Find the conflicting bytes in first object's categorybytes and second object's maskbytes.
+1. Check and take note of the `categorybytes` and `maskbytes` of both objects.
+2. Find the conflicting bytes in the first object's `categorybytes` and the second object's `maskbytes`.
 3. Disable the category bytes of the object that is easier to manipulate according to the previous step.
-4. Repeat: Disable the maskbytes of the same object, depending of conflicting bytes between first object's maskbytes and second objectt's category bytes.
+4. Repeat: Disable the `maskbytes` of the same object, depending on the conflicting bytes between the first object's `maskbytes` and the second object's `categorybytes`.
