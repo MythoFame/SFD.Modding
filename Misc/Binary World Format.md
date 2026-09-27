@@ -1,10 +1,10 @@
 # Binary World Format
 
 The `.sfdm` (map) and `.sfde` (extension script) files share one binary container: a
-sequential stream of length-prefixed section tokens. This page documents the parts
-both formats have in common: primitives, the `h_*` header sections, and the body
-sections. Format-specific parts live in [SFDM Format](../Mapmaking/SFDM%20Format.md)
-and [SFDE Format](../Scripting/SFDE%20Format.md).
+sequential stream of length-prefixed section tokens. This page covers the parts both
+formats have in common: primitives, the `h_*` headers and the body sections.
+Format-specific parts live in [SFDM Format](../Mapmaking/SFDM%20Format.md) and
+[SFDE Format](../Scripting/SFDE%20Format.md).
 
 ## Primitive encodings
 
@@ -17,11 +17,11 @@ Everything is little-endian, matching .NET `BinaryWriter`/`BinaryReader` default
 | Float32 | 4 bytes, little-endian IEEE 754 |
 | Bool | 1 byte (`00` = false, `01` = true) |
 | GUID | 16 raw bytes (`Guid.ToByteArray()` order) |
-| Null-delimited string | Raw UTF-8 bytes terminated by `00` (no length prefix) — used only by `h_exscript` |
+| Null-delimited string | Raw UTF-8 bytes terminated by `00` (no length prefix), used only by `h_exscript` |
 
-A section token is a **string** whose payload follows immediately. The header ends at
-the first token that does **not** start with `h`; body tokens start with `c_`. The
-game's reader (`MapInfo.ReadMapHeader`) throws on any unknown `h_*` token.
+A section token is a **string** whose payload follows immediately. The header ends at the
+first token that does **not** start with `h`, and body tokens start with `c_`. The game's
+reader (`MapInfo.ReadMapHeader`) throws on any unknown `h_*` token.
 
 ## Header sections (`h_*`)
 
@@ -40,20 +40,20 @@ Listed in the order the game writes them.
 | `h_wd` | string | Description |
 | `h_wdt` | 5 × int32 | Save date: year, month, day, hour, minute |
 | `h_pei` | string | Workshop publish ID (empty when unpublished) |
-| `h_mt` | 10 chars, raw | Official lock marker — see below |
-| `h_ext` | string | Game modes list — `.sfde` only |
-| `h_exscript\n` | null-delimited string | C# source — `.sfde` only; the token itself ends with `\n` |
+| `h_mt` | 10 chars, raw | Official lock marker, see below |
+| `h_ext` | string | Game modes list, `.sfde` only |
+| `h_exscript\n` | null-delimited string | C# source, `.sfde` only; the token itself ends with `\n` |
 | `h_pt` | parts table | See [SFDM Format](../Mapmaking/SFDM%20Format.md) |
 | `h_img` | int32 + bytes | Thumbnail (JPEG), length-prefixed blob |
 
 ### `h_mt` (the official lock marker)
 
-The payload is **exactly 10 characters, written raw (no length prefix)** — the game
-reads it with `ReadChars(10)`. Since the characters often exceed U+007F, the byte
+The payload is **exactly 10 characters, written raw (no length prefix)**, because the
+game reads it with `ReadChars(10)`. Since the characters often exceed U+007F, the byte
 length varies between 10 and 30.
 
 - Editable files store the plain ASCII text `SFDMAPEDIT` (10 bytes).
-- Officially locked files store the token computed from `Name + Author` — a
+- Officially locked files store the token computed from `Name + Author`. A
   ready-to-use JavaScript implementation:
 
 ```js
@@ -95,12 +95,12 @@ array[0] = '1'
 // the 10 chars, UTF-8 encoded, are the h_mt payload
 ```
 
-The gotcha: the round-robin indexes **both** the accumulator and the header with
-`i % 10`; only the first ten characters of the header are ever read (repeatedly),
-not a running sum over the whole string.
+The gotcha: the round-robin indexes **both** the accumulator and the header with `i % 10`.
+Only the first ten characters of the header are ever read, repeatedly, not a running sum
+over the whole string.
 
-Writing a length prefix here (a common mistake) shifts the whole stream and corrupts
-the file.
+Writing a length prefix here, a common mistake, shifts the whole stream and corrupts the
+file.
 
 ## Body sections (`c_*`)
 
@@ -109,7 +109,7 @@ The save order of the current game version:
 | Token | Payload | Notes |
 | ----- | ------- | ----- |
 | `c_wp` | World property stream | See next section |
-| `c_scrpt` | string | Base64(UTF-8(C# source)) — maps only |
+| `c_scrpt` | string | Base64(UTF-8(C# source)), maps only |
 | `c_lr` | Layer list | int32 categoryCount; per category: string name, int32 layerCount; per layer: bool locked, bool visible, string name |
 | `c_lrp` | Layer properties | int32 categoryCount; per category: string name, int32 layerCount; per layer: one world property stream |
 | `c_tl` | Custom ID table | int32 count; per entry: string customId, int32 index |
@@ -117,7 +117,7 @@ The save order of the current game version:
 | `EOF` | — | `[3]"EOF"`, terminates the file |
 
 The loader also accepts `c_fbgp` (a property stream) and `c_so` / `c_do` (object
-streams) — these are **legacy sections no longer written** by the current game.
+streams). These are **legacy sections no longer written** by the current game.
 
 ## World properties (`c_wp`)
 
@@ -136,7 +136,7 @@ count × {
 | -- | ---- | ---- | -------------- |
 | 2 | Map_Name | string | mirror of `h_wn` |
 | 3 | Map_Author | string | mirror of `h_wa` |
-| 8 | World_CameraArea | string | `240,-320,-240,320` — `top,left,bottom,right` |
+| 8 | World_CameraArea | string | `240,-320,-240,320`, which is `top,left,bottom,right` |
 | 9 | World_Bottom | string | `-250` |
 | 12 | World_Weather | string | `None` \| `Snow` \| `Rain` |
 | 61 | World_StartCommands | string | semicolon separated chat commands |
@@ -160,13 +160,36 @@ count × {
 | 340 | Object_StickyFeet | int | |
 | 341 | Object_BodyMass | float | `-1.0` |
 | 342 | Object_CollisionFilter | string | |
-| 343 | Object_Script_Colors | string | |
+| 343 | Object_Script_Colors | string | three color names joined by `\|`, see below |
 | 364 | World_CameraFixedIndividualZoom | float | `-1.0` |
 | 372 | World_ShowDistanceMarkers | bool | `true` |
 
 **Editing hazard:** every `h_*` metadata field listed as a mirror above exists
 *twice*. Updating only the header section is reverted the next time the editor saves
-the file — both locations must be written.
+the file. Both locations must be written.
+
+## Object colors (`Object_Script_Colors`, property 343)
+
+This is where a map object stores the color selected for each of the three color levels.
+The value is three color **names** joined by a pipe:
+
+```
+ClothingDarkRed||Skin3|
+```
+
+Here level 1 is `ClothingDarkRed`, and levels 2 and 3 are empty.
+
+- Split on `|` into exactly three fields. Anything else is ignored and the object falls
+  back to the first color of each level of its palette.
+- An empty field means "do not recolor that level", so the texture keeps its raw marker
+  pixels for that channel.
+- Names keep the casing of the object's palette and are matched against it
+  case-sensitively.
+
+The palette is **not** stored per object. It comes from the tile definition's
+`colorPalette` property, so changing that in an `.sfdx` file can leave unresolvable names
+here, which the game silently drops. See [Colors](../Colors/Colors.md) and
+[Color Palettes](../Colors/Palettes.md).
 
 ## Reference values
 
