@@ -7,10 +7,10 @@ offers colors from the selected object's palette.
 
 Palettes live in `Content/Data/Colors/Palettes/`:
 
-| File | Palettes | Used by |
-| ---- | -------- | ------- |
-| `TilePalettes.sfdx` | 15 | map objects, weapons |
-| `ItemPalettes.sfdx` | 4 | clothing and cosmetics |
+| File                | Palettes | Used by                |
+| ------------------- | -------- | ---------------------- |
+| `TilePalettes.sfdx` | 15       | map objects, weapons   |
+| `ItemPalettes.sfdx` | 4        | clothing and cosmetics |
 
 ## Defining a palette
 
@@ -21,11 +21,11 @@ colorPalette(ClothingGoggles1) {
 }
 ```
 
-| Property | Type | Script name | Description |
-| -------- | ---- | ----------- | ----------- |
-| `colors1` | list of color names | `PrimaryColorPackages` | Level 0, recolors red markers |
+| Property  | Type                | Script name              | Description                     |
+| --------- | ------------------- | ------------------------ | ------------------------------- |
+| `colors1` | list of color names | `PrimaryColorPackages`   | Level 0, recolors red markers   |
 | `colors2` | list of color names | `SecondaryColorPackages` | Level 1, recolors green markers |
-| `colors3` | list of color names | `TertiaryColorPackages` | Level 2, recolors blue markers |
+| `colors3` | list of color names | `TertiaryColorPackages`  | Level 2, recolors blue markers  |
 
 Each level is an independent list. Order matters only for the default: the **first** entry
 is what a freshly spawned object gets. An omitted or empty level has no members, and

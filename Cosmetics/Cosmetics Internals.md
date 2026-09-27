@@ -27,8 +27,8 @@
 
 - `jacketUnderBelt`: Normally this value is `false`. Only some items in ChestOver layer are set to `true`. If so, the ChestOver item is put behind the Waist item:
 
-  | `false`                                         | `true`                                         |
-  | ----------------------------------------------- | ---------------------------------------------- |
+  | `false`                                           | `true`                                           |
+  | ------------------------------------------------- | ------------------------------------------------ |
   | <img src="../assets/JacketUnderBelt_False.png" /> | <img src="../assets/JacketUnderBelt_True.png" /> |
 
 - `colorPalette`: The name of the palette that holds a set of colors to customize your clothing. Open `Superfighters Deluxe\Content\Data\Colors\Palettes\ItemPalettes.sfdx` to see more detail. Currently there are 4 palettes in v1.3.7:
@@ -63,11 +63,11 @@ equipment layer. Cosmetics are not a special case here.
 Each equipment layer independently stores three color names, taken from that item's
 `colorPalette`. Those map to the palette's levels, which the script API exposes as:
 
-| Level | Palette key | Script property | Recolors |
-| ----- | ----------- | --------------- | -------- |
-| 0 | `colors1` | `PrimaryColorPackages` | red marker pixels |
-| 1 | `colors2` | `SecondaryColorPackages` | green marker pixels |
-| 2 | `colors3` | `TertiaryColorPackages` | blue marker pixels |
+| Level | Palette key | Script property          | Recolors            |
+| ----- | ----------- | ------------------------ | ------------------- |
+| 0     | `colors1`   | `PrimaryColorPackages`   | red marker pixels   |
+| 1     | `colors2`   | `SecondaryColorPackages` | green marker pixels |
+| 2     | `colors3`   | `TertiaryColorPackages`  | blue marker pixels  |
 
 Levels are zero-indexed in code (`GetColor1`, `GetColor2`, `GetColor3` and the
 `GetFirstColorFromLevel(i)` calls) but one-indexed in the `.sfdx` palette files, hence

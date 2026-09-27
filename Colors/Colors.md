@@ -7,10 +7,10 @@ the `.sfdx` color files.
 
 Two separate databases load from two separate folders at startup:
 
-| Database | Folder | Files | Contents |
-| -------- | ------ | ----- | -------- |
-| `ColorDatabase` | `Content/Data/Colors/Colors/` | `ItemColors.sfdx`, `TileColors.sfdx` | 124 named color ramps |
-| `ColorPaletteDatabase` | `Content/Data/Colors/Palettes/` | `ItemPalettes.sfdx`, `TilePalettes.sfdx` | 19 named palettes |
+| Database               | Folder                          | Files                                    | Contents              |
+| ---------------------- | ------------------------------- | ---------------------------------------- | --------------------- |
+| `ColorDatabase`        | `Content/Data/Colors/Colors/`   | `ItemColors.sfdx`, `TileColors.sfdx`     | 124 named color ramps |
+| `ColorPaletteDatabase` | `Content/Data/Colors/Palettes/` | `ItemPalettes.sfdx`, `TilePalettes.sfdx` | 19 named palettes     |
 
 Colors are the ramps. Palettes are the lists of ramps an object may use, split across
 three **levels**. This page covers colors. See
@@ -26,32 +26,32 @@ There are five shade slots. Their values are hardcoded in the engine
 private static readonly int[] shades = new int[5] { 255, 192, 128, 64, 32 };
 ```
 
-Each palette level owns one **primary channel**. A pixel is a marker for level *L*, shade
-*S* if it equals the shade value in channel *L* and is `0` in the other two channels.
+Each palette level owns one **primary channel**. A pixel is a marker for level _L_, shade
+_S_ if it equals the shade value in channel _L_ and is `0` in the other two channels.
 
 Levels are zero-indexed in code (`GetColor1`, `SetColor1`, `GetFirstColorFromLevel(0)`) but
 one-indexed in the `.sfdx` palette files, which is where the names below come from:
 
-| Level | Palette key | Script name | Channel | Marker pixels (shade 1 to 5) |
-| ----- | ----------- | ----------- | ------- | ---------------------------- |
-| 0 | `colors1` | `PrimaryColorPackages` | Red | `(255,0,0)` `(192,0,0)` `(128,0,0)` `(64,0,0)` `(32,0,0)` |
-| 1 | `colors2` | `SecondaryColorPackages` | Green | `(0,255,0)` `(0,192,0)` `(0,128,0)` `(0,64,0)` `(0,32,0)` |
-| 2 | `colors3` | `TertiaryColorPackages` | Blue | `(0,0,255)` `(0,0,192)` `(0,0,128)` `(0,0,64)` `(0,0,32)` |
+| Level | Palette key | Script name              | Channel | Marker pixels (shade 1 to 5)                              |
+| ----- | ----------- | ------------------------ | ------- | --------------------------------------------------------- |
+| 0     | `colors1`   | `PrimaryColorPackages`   | Red     | `(255,0,0)` `(192,0,0)` `(128,0,0)` `(64,0,0)` `(32,0,0)` |
+| 1     | `colors2`   | `SecondaryColorPackages` | Green   | `(0,255,0)` `(0,192,0)` `(0,128,0)` `(0,64,0)` `(0,32,0)` |
+| 2     | `colors3`   | `TertiaryColorPackages`  | Blue    | `(0,0,255)` `(0,0,192)` `(0,0,128)` `(0,0,64)` `(0,0,32)` |
 
-Recoloring is a straight pixel substitution. For every pixel matching marker (*L*, *S*),
-replace it with shade *S* of the color selected for level *L* (`Textures.RecolorTexture`,
+Recoloring is a straight pixel substitution. For every pixel matching marker (_L_, _S_),
+replace it with shade _S_ of the color selected for level _L_ (`Textures.RecolorTexture`,
 `SFD.Tiles/Textures.cs:232`). The marker's alpha channel is **not** compared.
 
 ### A real example
 
 `Content/Data/Images/Tiles/Solid/Concrete/Concrete00A.png` is 8x8, or 64 pixels:
 
-| Pixel | Count | Meaning |
-| ----- | ----- | ------- |
-| `(192,0,0)` | 32 | level 0, shade 2 |
-| `(255,0,0)` | 8 | level 0, shade 1 |
-| `(128,0,0)` | 8 | level 0, shade 3 |
-| `(0,0,0)` | 16 | not a marker, stays black |
+| Pixel       | Count | Meaning                   |
+| ----------- | ----- | ------------------------- |
+| `(192,0,0)` | 32    | level 0, shade 2          |
+| `(255,0,0)` | 8     | level 0, shade 1          |
+| `(128,0,0)` | 8     | level 0, shade 3          |
+| `(0,0,0)`   | 16    | not a marker, stays black |
 
 `Concrete00A` uses the `Concrete` palette, whose `colors1` starts with `StoneGray`
 (`(255,255,255) (200,200,200) (120,120,120)`). Shade 1 becomes white, shade 2 becomes
@@ -87,10 +87,10 @@ color(ClothingLightRed) {
 
 A `color()` node takes one property:
 
-| Property | Type | Description |
-| -------- | ---- | ----------- |
-| `c` | list of `(r,g,b)` | The shade ramp, brightest first. 1 to 5 entries. |
-| `key` | string | Optional. Overrides the name in parentheses. |
+| Property | Type              | Description                                      |
+| -------- | ----------------- | ------------------------------------------------ |
+| `c`      | list of `(r,g,b)` | The shade ramp, brightest first. 1 to 5 entries. |
+| `key`    | string            | Optional. Overrides the name in parentheses.     |
 
 ### Parsing, exactly
 
@@ -126,15 +126,15 @@ three-element tuples. For real transparency, use an alpha-0 pixel in the texture
 exactly one channel, bumping it by 1 (`255` becomes `254`, otherwise `+1`) so a color can
 never be mistaken for one of its own markers. Seven shipped colors are affected:
 
-| Color | Shade | Written | Loaded as |
-| ----- | ----- | ------- | --------- |
-| `Red` | 1 to 5 | `(255,0,0) (192,0,0) (128,0,0) (64,0,0) (32,0,0)` | `(254,0,0) (193,0,0) (129,0,0) (65,0,0) (33,0,0)` |
-| `Green` | 1 to 5 | `(0,255,0) (0,192,0) …` | `(0,254,0) (0,193,0) …` |
-| `Blue` | 1 to 5 | `(0,0,255) (0,0,192) …` | `(0,0,254) (0,0,193) …` |
-| `NeonRed` | 4, 5 | `(128,0,0) (64,0,0)` | `(129,0,0) (65,0,0)` |
-| `NeonGreen` | 4, 5 | `(0,128,0) (0,64,0)` | `(0,129,0) (0,65,0)` |
-| `Wood1` | 3 | `(128,0,0)` | `(129,0,0)` |
-| `ClothingDarkRed` | 3 | `(64,0,0)` | `(65,0,0)` |
+| Color             | Shade  | Written                                           | Loaded as                                         |
+| ----------------- | ------ | ------------------------------------------------- | ------------------------------------------------- |
+| `Red`             | 1 to 5 | `(255,0,0) (192,0,0) (128,0,0) (64,0,0) (32,0,0)` | `(254,0,0) (193,0,0) (129,0,0) (65,0,0) (33,0,0)` |
+| `Green`           | 1 to 5 | `(0,255,0) (0,192,0) …`                           | `(0,254,0) (0,193,0) …`                           |
+| `Blue`            | 1 to 5 | `(0,0,255) (0,0,192) …`                           | `(0,0,254) (0,0,193) …`                           |
+| `NeonRed`         | 4, 5   | `(128,0,0) (64,0,0)`                              | `(129,0,0) (65,0,0)`                              |
+| `NeonGreen`       | 4, 5   | `(0,128,0) (0,64,0)`                              | `(0,129,0) (0,65,0)`                              |
+| `Wood1`           | 3      | `(128,0,0)`                                       | `(129,0,0)`                                       |
+| `ClothingDarkRed` | 3      | `(64,0,0)`                                        | `(65,0,0)`                                        |
 
 `Red`, `Green` and `Blue` are defined as literal marker ramps on purpose. Do not be
 surprised when your hex value does not survive a round trip.
@@ -154,7 +154,7 @@ Values end at the first `;`. Omitting it produces
 **Duplicate names overwrite, they do not fail.**
 A second `color()` with the same name logs
 `Error: Color 'X' already exist. Will be replaced with new values.` and wins. This depends
-on file enumeration order, which is not guaranteed. Duplicate *palettes* are fatal, see
+on file enumeration order, which is not guaranteed. Duplicate _palettes_ are fatal, see
 [Color Palettes](Palettes.md).
 
 ## Where colors are stored

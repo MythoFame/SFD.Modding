@@ -61,7 +61,7 @@ A campaign `.sfdm` is simply N complete maps joined in one file:
 - **Parts 2..N** are full maps with their own headers, their own `c_wp`, and their
   own `c_scrpt` — but no `h_pt`/`h_img`.
 - Shared metadata (name, author, publish ID, lock flags, version, official marker)
-  is *mirrored into every part's header*. A part whose `h_mt` still holds the
+  is _mirrored into every part's header_. A part whose `h_mt` still holds the
   official token stays read-only in the editor even when the master part was
   unlocked; fan every edit across all parts.
 - Each part also has its own independent script.
