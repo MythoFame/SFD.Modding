@@ -1,6 +1,6 @@
 # SFDE Format (extension scripts)
 
-`.sfde` files are Superfighters Deluxe **extension scripts**. They use the shared [File Format](../Misc/File%20Format.md)
+`.sfde` files are Superfighters Deluxe **extension scripts**. They use the shared [Binary World Format](../Misc/Binary%20World%20Format.md)
 container and are nearly identical to `.sfdm` maps; this page covers the
 differences.
 
