@@ -34,7 +34,7 @@ Reverse engineering and useful information for modding, map making and scripting
 
 | Name                                                 | Description                                                  |
 | ---------------------------------------------------- | ------------------------------------------------------------ |
-| [Collisions Bytes](Collisions/Collisions%20Bytes.md) | How game handle collisions with maskbytes and categorybytes. |
+| [Collision Bits](Collisions/Collision%20Bits.md) | How the game handles collisions with mask bits and category bits. |
 
 ## Mapmaking
 
