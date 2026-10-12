@@ -377,7 +377,7 @@ collisionGroup(static_ground) {
 - `dynamics_thrown`
 - `full`
 
-These are 16 bytes binary bitmask values, not normal integers.
+These are 16-bit binary bitmask values, not normal integers.
 
 ---
 
