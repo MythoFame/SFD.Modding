@@ -15,8 +15,12 @@ Take note of the `maskBits` and `categoryBits` of the player and of the crates.
 
 ### Why do they collide?
 
-They collide when one bit in the `categoryBits` of the first object is set to `1` while the same bit of the `maskBits` of the second object is also `1`.
-Note that it applies in reverse, with `categoryBits` from the second object and `maskBits` from the first object.
+Two objects collide when either of these is true:
+
+- the first object's `maskBits` and the second object's `categoryBits` share a set bit
+- the first object's `categoryBits` and the second object's `maskBits` share a set bit
+
+Either direction is enough, so a disable has to break both.
 
 So, what do we do?
 
@@ -36,6 +40,7 @@ It's easier to handle the crate, so we will go for the second solution.
 ### Disabling the collision
 
 Link your `AlterCollisionTile` to the crate and disable the bits you want to disable.
+The tile clears the disabled bits from the target's own bits, so a `0` bit in the disabled value changes nothing.
 
 For instance, you want to disable the fourth bit of the crate's `categoryBits`, which is `0000 0000 0000 1000` in binary.
 
