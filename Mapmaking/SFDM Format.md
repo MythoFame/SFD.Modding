@@ -83,6 +83,44 @@ It is not compressed or encrypted, a plain
 `int32 length` followed by a JPEG blob. Only the master part of a campaign has one.
 The game validates the image dimensions before accepting it.
 
+## Objects, tiles and scale
+
+The `c_sobjs` encoding (tags, loader quirks, `c_tl` rebuild rule) is documented
+in [Binary World Format](../Misc/Binary%20World%20Format.md#object-stream-c_sobjs);
+this section covers what the objects point at.
+
+- **Tile catalog:** tiles are defined by human-readable `.sfdx` files
+  (`Content/Data/Tiles/*.sfdx`, `Content/Data/Weapons/*.sfdx` — ~1991 `tile()`
+  blocks total) and addressed by key (`Concrete00A`, `WpnPistol`, …). See
+  [SFDX Format](../Misc/SFDX%20Format.md). Unknown keys load as `"error"`.
+- **Sprites:** plain PNGs under `Content/Data/Images/Tiles/...`, loaded by
+  texture name. No unpacking or decryption is needed for a custom renderer.
+- **Sizeable tiles:** `SFD.Tiles.Tile.SIZEABLE` in `Superfighters Deluxe.dll`
+  is `N = 0` (fixed), `V = 1` (vertical), `H = 2` (horizontal), `D = V|H`
+  (both), `A = 4`. Sizeables store their size in per-object properties `Size_X`
+  (19) / `Size_Y` (20) and stretch fixtures/textures at load
+  (`ObjectData.RecreateFixture`). A renderer must implement stretching, not
+  just sprite blitting.
+- **Scale of real maps:** shipped versus maps carry roughly 1,000–2,300 objects
+  each (31 maps, 47,454 objects total; e.g. `Alley.sfdm` = 1392). Any replacement
+  editor must handle a few thousand selectable objects per map without
+  degrading.
+- **Recoloring:** per-object colors resolve through the tile's `colorPalette`
+  against the shipped palettes; see [Colors](../Colors/Colors.md) and
+  [Color Palettes](../Colors/Palettes.md).
+
+## Writer notes (`GameWorld.WriteToStream`)
+
+- `h_gv` gets a **fresh random GUID** plus the writing game version
+  (currently `v.1.6.1.0`) on every save. `h_or` (original GUID + owner hash)
+  is preserved via the part header info.
+- Body save order is fixed:
+  `c_wp`, `c_scrpt` (maps only), `c_lr`, `c_lrp`, `c_tl` (rebuilt), `c_sobjs`,
+  `EOF`. The loader is order-tolerant per section token, but writers should
+  follow this order.
+- Saving recompresses object IDs and rebuilds `c_tl` (see
+  [Binary World Format](../Misc/Binary%20World%20Format.md#custom-id-table-c_tl)).
+
 ## Editing pitfalls
 
 1. **Double bookkeeping**: `h_*` fields mirror `c_wp` properties (name, author,
@@ -92,3 +130,9 @@ The game validates the image dimensions before accepting it.
 3. **`h_pt` positions are absolute offsets**: any size-changing edit before a
    part's start must re-emit the table with shifted positions.
 4. **Campaign mirrors**: metadata edits must fan out to every part.
+5. **`c_tl` is derived data**: adding, removing, or renaming an object's custom
+   ID without rebuilding the table leaves dangling indices. Rebuild it
+   first-seen, 1-based on every object-touching save.
+6. **`GroupID` is 2 bytes** (`uint16`, tag 10), the only non-4-byte numeric in
+   the object stream. Tags 8/9 (`LinearVelocity`/`AngularVelocity`) are
+   load-only — do not emit them.

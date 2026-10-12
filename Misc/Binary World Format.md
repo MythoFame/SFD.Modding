@@ -110,10 +110,10 @@ The save order of the current game version:
 | --------- | --------------------- | ------------------------------------------------------------------------------------------------------------------- |
 | `c_wp`    | World property stream | See next section                                                                                                    |
 | `c_scrpt` | string                | Base64(UTF-8(C# source)), maps only                                                                                 |
-| `c_lr`    | Layer list            | int32 categoryCount; per category: string name, int32 layerCount; per layer: bool locked, bool visible, string name |
-| `c_lrp`   | Layer properties      | int32 categoryCount; per category: string name, int32 layerCount; per layer: one world property stream              |
-| `c_tl`    | Custom ID table       | int32 count; per entry: string customId, int32 index                                                                |
-| `c_sobjs` | Object stream         | int32 count + serialized objects/tiles                                                                              |
+| `c_lr`    | Layer list            | int32 categoryCount; per category: string name, int32 layerCount; per layer: bool locked, bool visible, string name. See "Layers" below |
+| `c_lrp`   | Layer properties      | Same category framing as `c_lr`; per layer: one world property stream. See "Layers" below                           |
+| `c_tl`    | Custom ID table       | int32 count; per entry: string customId, int32 index. Rebuilt on save, see below                                     |
+| `c_sobjs` | Object stream         | int32 count + serialized objects/tiles. See "Object stream" below                                                   |
 | `EOF`     | —                     | `[3]"EOF"`, terminates the file                                                                                     |
 
 The loader also accepts `c_fbgp` (a property stream) and `c_so` / `c_do` (object
@@ -211,6 +211,109 @@ The flags in the low 16 bits of word 2:
 | 4 | `AbsorbProjectile` |
 
 An empty string means no override, so the fixtures keep their tile defaults. A non-empty value replaces the filter of every fixture on the object, except players. See [Collision Bits](../Collisions/Collision%20Bits.md) for what the bits mean.
+
+## Layers (`c_lr` / `c_lrp`)
+
+`c_lr` declares the render layers, `c_lrp` carries one world property stream per
+layer in the same category framing:
+
+```
+int32 categoryCount
+categoryCount × {
+    string categoryName     // e.g. "BG", "SLD", "OBJ", "FG", "MAR", "ITM", ...
+    int32  layerCount
+    layerCount × {
+        // c_lr:
+        bool   locked
+        bool   visible
+        string name
+        // c_lrp: world property stream (same encoding as c_wp)
+    }
+}
+```
+
+Source: `GameWorld.ReadFromStream` / `WriteToStream` in `Superfighters Deluxe.dll`.
+Reader notes:
+
+- `categoryName` is parsed into `SFD.Category.TYPE` (`FBG = 0`, `BG = 2`, `LN = 3`,
+  `SLD = 4`, `OBJ = 5`, `DEB = 6`, `PLR = 11`, `ITM = 19`, `THRN = 20`,
+  `FG = 21`, `MAR = 25`, plus `UNUSED*` slots). Unknown names resolve to `-1`
+  and their layers are **silently skipped** — the data is still consumed, just
+  not applied.
+- The writer always emits every category (`RenderCategories.Categories.Length`),
+  so files disagreeing on category count are normal across game versions.
+
+## Custom ID table (`c_tl`)
+
+```
+int32 count
+count × {
+    string customId
+    int32  index     // 1-based, first-seen order
+}
+```
+
+The writer **rebuilds** this table on every save from the objects' non-empty
+`Object_CustomID` property values (`GameWorld.WriteToStream`): each distinct
+string gets the next 1-based index in first-seen order. Editors must rewrite
+the table (not patch it) whenever objects are added, removed, or renamed.
+
+## Object stream (`c_sobjs`)
+
+```
+int32 objectCount
+objectCount × { object }
+```
+
+One object is a sequence of tagged fields terminated by tag `9999`:
+
+```
+object := ( int32 tag + payload )* + int32(9999)
+```
+
+Tags (`SFD.ObjectData.ObjectDataValue` in `Superfighters Deluxe.dll`):
+
+| Tag  | Name             | Payload encoding                              | Notes                                                        |
+| ---- | ---------------- | --------------------------------------------- | ------------------------------------------------------------ |
+| 0    | `MapObjectID`    | string (tile key, e.g. `Concrete00A`)         | First field on save                                          |
+| 1    | `CustomID`       | int32 (index into `c_tl`)                     | `0` = none                                                   |
+| 10   | `GroupID`        | uint16                                        | Note the width: 2 bytes, not 4                               |
+| 2    | `WorldPosition`  | 2 × float32 (`x`, `y`, world units = pixels)  |                                                              |
+| 3    | `Angle`          | float32 (radians)                             |                                                              |
+| 4    | `LocalRenderLayer` | int32                                       | Layer index within the object's draw category                |
+| 5    | `FaceDirection`  | int32 (`1` / `-1`)                            |                                                              |
+| 6    | `Colors`         | int32 count + count × string                  | 3 color names on save; padded with `""` to 3 on load          |
+| 7    | `Properties`     | world property stream (same encoding as `c_wp`) | Per-object properties (size, mass, overrides, …)           |
+| 8    | `LinearVelocity` | 2 × float32                                   | **Load-only**, never written by the current game             |
+| 9    | `AngularVelocity` | float32                                      | **Load-only**, never written by the current game             |
+| 9999 | `END`            | —                                             | Terminates one object                                        |
+
+The writer (`SFD.ObjectData.Save`) emits tags in the fixed order
+`0, 1, 10, 2, 3, 4, 5, 6, 7, 9999`, but the loader reads tag-driven until
+`9999`, so order-independent parsing is safe.
+
+Loader notes (`SFD.ObjectData.Load`):
+
+- Unknown `MapObjectID` tile keys fall back to the tile `"error"` — the object
+  still loads. Editors can rely on this for forward compatibility, not for
+  shipping maps.
+- A `Colors` array that is not exactly 3 entries is padded with `""` up to 3.
+  `""` means "do not recolor that level" (see `Object_Script_Colors`, property
+  343, above — tag 6 and property 343 carry the same three level colors in
+  different forms).
+- Duplicate tags: the first occurrence wins.
+- A truncated stream sets the corrupt-file flag (`EditMapFileIsCorrupt`) instead
+  of throwing; the editor still opens the file.
+
+Per-object properties (tag 7) use the same `int32 id / int32 type / value`
+encoding as `c_wp`. Which IDs an object carries depends on its tile — e.g.
+sizeable tiles add `Size_X` (19) / `Size_Y` (20) — plus universal entries such
+as `Object_CustomID`, `Object_BodyType`, `Object_BodyMass`, `Object_StickyFeet`,
+`Object_CollisionFilter` (342) and `Object_Script_Colors` (343).
+
+Verification: a tag-driven parser built from this spec reads every object of
+all 31 shipped versus maps (47,454 objects, e.g. 1392 in `Alley.sfdm`) and
+lands exactly on the trailing `[3]"EOF"` with no unknown tags.
 
 ## Reference values
 
