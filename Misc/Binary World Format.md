@@ -159,7 +159,7 @@ count × {
 | 339 | Map_ScriptTypes                 | string | `Versus,Custom,Campaign,Survival`                     |
 | 340 | Object_StickyFeet               | int    |                                                       |
 | 341 | Object_BodyMass                 | float  | `-1.0`                                                |
-| 342 | Object_CollisionFilter          | string |                                                       |
+| 342 | Object_CollisionFilter          | string | Base64 of two `int32`s, see below                     |
 | 343 | Object_Script_Colors            | string | three color names joined by `\|`, see below           |
 | 364 | World_CameraFixedIndividualZoom | float  | `-1.0`                                                |
 | 372 | World_ShowDistanceMarkers       | bool   | `true`                                                |
@@ -190,6 +190,27 @@ The palette is **not** stored per object. It comes from the tile definition's
 `colorPalette` property, so changing that in an `.sfdx` file can leave unresolvable names
 here, which the game silently drops. See [Colors](../Colors/Colors.md) and
 [Color Palettes](../Colors/Palettes.md).
+
+## Collision filter (`Object_CollisionFilter`, property 342)
+
+The value is a Base64 string of eight bytes: two little-endian `int32`s.
+
+| Word | High 16 bits | Low 16 bits |
+| ---- | ------------ | ----------- |
+| 1 | `CategoryBits` | `MaskBits` |
+| 2 | `AboveBits` | flags |
+
+The flags in the low 16 bits of word 2:
+
+| Bit | Flag |
+| --- | ---- |
+| 0 | `ProjectileHit` |
+| 1 | `BlockMelee` |
+| 2 | `BlockExplosions` |
+| 3 | `BlockFire` |
+| 4 | `AbsorbProjectile` |
+
+An empty string means no override, so the fixtures keep their tile defaults. A non-empty value replaces the filter of every fixture on the object, except players. See [Collision Bits](../Collisions/Collision%20Bits.md) for what the bits mean.
 
 ## Reference values
 
