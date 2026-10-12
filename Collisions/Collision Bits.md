@@ -68,48 +68,53 @@ You will have to do these few steps to disable the collision between two objects
 
 ## Scripting
 
-The same filter is available through the script API. `IObject` exposes the whole struct, and `IObjectAlterCollisionTile` exposes the bits and the per-object option. Get the tile in `AfterStartup`, since it only exists once the map is live.
+Scripts change a filter by writing the object's `CollisionFilter` with `SetCollisionFilter`. The new value applies to every fixture on that object. Players are excluded from this, so the object you change must not be a player. Players can still be read and used as references.
 
-### Disabling collisions between two objects
-
-Set the tile's targets and turn on per-object ignoring:
+### Reading a filter
 
 ```csharp
-IObjectAlterCollisionTile alter = Game.GetSingleObjectByCustomID<IObjectAlterCollisionTile>("CrateNoPlayers");
+IObject crate = Game.GetSingleObjectByCustomID<IObject>("Crate");
+CollisionFilter filter = crate.GetCollisionFilter();
+// filter.CategoryBits, filter.MaskBits, filter.AboveBits (ushort)
+```
 
-public void DisableCollisionBetween(IObject crate, IObject player)
+`GetCollisionFilter()` returns the union of the bits of all the object's fixtures.
+
+### Stopping two objects from colliding
+
+Apply the rule from the start of this page to the target object's own bits. Clear the reference's bits from the target in both directions:
+
+- clear the reference's `maskBits` from the target's `categoryBits`
+- clear the reference's `categoryBits` from the target's `maskBits`
+
+```csharp
+public void StopCollidingWith(IObject target, IObject reference)
 {
-    alter.SetTargetObjects(new IObject[] { crate, player });
-    alter.SetDisableCollisionTargetObjects(true);
+    CollisionFilter targetFilter = target.GetCollisionFilter();
+    CollisionFilter referenceFilter = reference.GetCollisionFilter();
+
+    targetFilter.CategoryBits &= (ushort)~referenceFilter.MaskBits;
+    targetFilter.MaskBits &= (ushort)~referenceFilter.CategoryBits;
+
+    target.SetCollisionFilter(targetFilter);
 }
 ```
 
-Each target then ignores the other targets' bodies, in both directions. Only the listed objects are affected, so this is the option to use for a single pair.
+The reference is only read, so it keeps its collisions. The target loses every collision that uses the cleared bits, not just the one with the reference.
 
-### Disabling by bits
+For example, take a crate as the target and a player as the reference. From the values in `collisionGroups.sfdx`:
 
-The bit route clears bits from every target that shares them, so it affects every object with those bits. To stop a target from colliding with a reference object, disable the reference's bits in the target's own filter:
+- the crate's `categoryBits` are `0000 0000 0000 1000`, and the player's `maskBits` include that bit
+- the player's `categoryBits` are `0000 0000 0000 0100`, and the crate's `maskBits` include that bit
 
-```csharp
-IObject reference = Game.GetSingleObjectByCustomID<IObject>("Crate");
-IObjectAlterCollisionTile alter = Game.GetSingleObjectByCustomID<IObjectAlterCollisionTile>("CrateNoPlayers");
-CollisionFilter filter = reference.GetCollisionFilter();
+Clearing the player's `maskBits` from the crate's `categoryBits` removes `0000 0000 0000 1000` from the crate, and clearing the player's `categoryBits` from the crate's `maskBits` removes `0000 0000 0000 0100`. Those bits are shared with other objects, so the change reaches them too. `0000 0000 0000 1000` is the `dynamics_g1` category, so nothing matches this crate's category anymore. But the crate's own `maskBits` still include that bit, so it still collides with other crates in that direction. Check which objects share a bit before you clear it.
 
-alter.SetDisabledMaskBits(filter.CategoryBits);
-alter.SetDisabledCategoryBits(filter.MaskBits);
-```
-
-`SetDisabledMaskBits` breaks the reference's categories against the target's masks, and `SetDisabledCategoryBits` breaks the reference's masks against the target's categories. Together they cover both directions.
-
-### Reading and writing a filter
+Keep the original filter if you need to restore the collision later:
 
 ```csharp
-CollisionFilter filter = crate.GetCollisionFilter();
-// filter.CategoryBits, filter.MaskBits, filter.AboveBits (ushort)
-// filter.ProjectileHit, filter.BlockMelee, filter.BlockFire,
-// filter.BlockExplosions, filter.AbsorbProjectile (bool)
+CollisionFilter original = target.GetCollisionFilter();
+// ...
+target.SetCollisionFilter(original);
 ```
 
-`GetCollisionFilter()` combines the filters of all of the object's fixtures with OR, so it returns the union of the object's bits.
-
-`SetCollisionFilter(CollisionFilter)` replaces the filter of every fixture on the object. It does not change a player's fixtures, so use `AlterCollisionTile` for players.
+Restoring writes back every field, including the bits you did not change.
